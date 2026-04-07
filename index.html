@@ -141,6 +141,30 @@ function cancel() {
   alert("Subscription cancelled");
 }
 </script>
+<!-- popup here -->
+
+<script>
+function openPopup() {
+  document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+function submitEmail() {
+  let email = document.getElementById("emailInput").value;
+
+  if(email === "") {
+    alert("Enter email!");
+    return;
+  }
+
+  alert("Verification sent!");
+  closePopup();
+}
+</script>
 
 </body>
 </html>
+
