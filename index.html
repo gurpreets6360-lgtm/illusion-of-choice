@@ -3,34 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StreamFlow Demo</title>
+<title>StreamFlow Premium</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: black;
-  color: white;
-}
-
-.section {
-  padding: 40px;
-}
+/* --- SAME DESIGN (kept clean + premium) --- */
+body { margin:0; font-family:Arial; background:#0b0b0f; color:white; }
+.screen { display:none; padding:30px; }
+.screen.active { display:block; }
 
 .btn {
-  padding: 10px 20px;
-  background: red;
-  color: white;
-  border: none;
-  cursor: pointer;
+  padding:12px 18px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
 }
 
-.step {
-  background: #1a1a1a;
-  padding: 15px;
-  margin: 10px 0;
-  border-left: 4px solid red;
-  cursor: pointer;
+.btn-primary { background:red; color:white; }
+.btn-link { background:none; color:#aaa; text-decoration:underline; }
+.orange { background:orange; color:black; }
+
+.flow-step {
+  background:#1a1a1a;
+  padding:15px;
+  margin:10px 0;
+  border-left:4px solid orange;
 }
 </style>
 </head>
@@ -38,101 +34,90 @@ body {
 <body>
 
 <!-- SCREEN 1 -->
-<div id="screen1" class="section">
-  <h1>Easy to Join. Hard to Leave.</h1>
-  <p>Roach Motel Dark Pattern Demo</p>
-  <button class="btn" onclick="goTo(2)">Start Free Trial</button>
+<div id="screen1" class="screen active">
+  <h1>Upgrade looks easy. Leaving does not.</h1>
+  <button class="btn btn-primary" onclick="goTo(2)">Start Free Trial</button>
 </div>
 
 <!-- SCREEN 2 -->
-<div id="screen2" class="section" style="display:none;">
+<div id="screen2" class="screen">
   <h2>ROACH MOTEL</h2>
-  <p>
-    A subscription service that is easy to sign up for but hard to cancel.
-  </p>
-
-  <button class="btn" onclick="goTo(3)">Continue</button>
+  <p>Easy to join, hard to leave.</p>
+  <button class="btn btn-primary" onclick="goTo(3)">Continue</button>
 </div>
 
 <!-- SCREEN 3 -->
-<div id="screen3" class="section" style="display:none;">
+<div id="screen3" class="screen">
   <h2>Cancellation Maze</h2>
 
-  <div class="step" onclick="openPopup()">Step 1: Verify account</div>
-  <div class="step" onclick="openOffer()">Step 2: Discount offer</div>
-  <div class="step" onclick="openFinal()">Step 3: Final confirmation</div>
+  <div class="flow-step">Step 1: Confirm identity</div>
+  <button class="btn orange" onclick="openPopup()">Verify Account</button>
+
+  <div class="flow-step">Step 2: Special offer</div>
+  <button class="btn orange" onclick="openOffer()">Review Offer</button>
+
+  <div class="flow-step">Step 3: Final confirmation</div>
+  <button class="btn btn-primary" onclick="openFinal()">Final Cancel</button>
 </div>
 
 <!-- POPUP 1 -->
 <div id="popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
-  <div style="background:#111; padding:20px;">
-    <h3>Verify Email</h3>
-    <input id="emailInput" placeholder="Enter email">
-    <br><br>
-    <button onclick="submitEmail()">Verify</button>
-    <button onclick="closePopup()">Close</button>
+  <div style="background:#111; padding:25px; border-radius:10px; width:300px; text-align:center;">
+    <h3 style="color:red;">Verify Email</h3>
+    <input id="emailInput" placeholder="Enter email" style="width:100%; padding:10px; margin:10px 0;">
+    <button class="btn btn-primary" style="width:100%;" onclick="submitEmail()">Send Link</button>
+    <button class="btn btn-link" onclick="closePopup()">Cancel</button>
   </div>
 </div>
 
 <!-- POPUP 2 -->
-<div id="offerPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
-  <div style="background:#111; padding:20px;">
-    <h3>🎉 50% OFF</h3>
-    <button onclick="stay()">Stay</button>
-    <button onclick="closeOffer()">No thanks</button>
+<div id="offerPopup" style="display:none; position:fixed; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+  <div style="background:#111; padding:25px; border-radius:10px; width:300px; text-align:center;">
+    <h3 style="color:#fbbf24;">🎉 50% OFF</h3>
+    <p>Stay and save money</p>
+    <button class="btn btn-primary" style="width:100%;" onclick="stay()">Stay & Save</button>
+    <button class="btn btn-link" onclick="closeOffer()">No thanks</button>
   </div>
 </div>
 
 <!-- POPUP 3 -->
-<div id="finalPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
-  <div style="background:#111; padding:20px;">
-    <h3>😢 We’ll miss you</h3>
-    <button onclick="cancel()">Cancel Anyway</button>
-    <button onclick="closeFinal()">Go Back</button>
+<div id="finalPopup" style="display:none; position:fixed; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+  <div style="background:#111; padding:25px; border-radius:10px; width:300px; text-align:center;">
+    <h3 style="color:#ff6b6b;">😢 We'll miss you</h3>
+    <p>You will lose premium features</p>
+    <button class="btn btn-primary" style="width:100%;" onclick="confirmCancel()">Cancel Anyway</button>
+    <button class="btn btn-link" onclick="closeFinal()">Keep Subscription</button>
   </div>
 </div>
 
 <script>
-function goTo(num) {
-  document.getElementById("screen1").style.display = "none";
-  document.getElementById("screen2").style.display = "none";
-  document.getElementById("screen3").style.display = "none";
-  document.getElementById("screen" + num).style.display = "block";
+// Navigation
+function goTo(num){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen'+num).classList.add('active');
 }
 
 // STEP 1
-function openPopup() {
-  document.getElementById("popup").style.display = "flex";
-}
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
-}
-function submitEmail() {
+function openPopup(){ document.getElementById("popup").style.display="flex"; }
+function closePopup(){ document.getElementById("popup").style.display="none"; }
+function submitEmail(){
+  let email = document.getElementById("emailInput").value;
+  if(email===""){ alert("Enter email"); return; }
   alert("Verification sent!");
   closePopup();
 }
 
 // STEP 2
-function openOffer() {
-  document.getElementById("offerPopup").style.display = "flex";
-}
-function closeOffer() {
-  document.getElementById("offerPopup").style.display = "none";
-}
-function stay() {
-  alert("You stayed subscribed!");
-  closeOffer();
-}
+function openOffer(){ document.getElementById("offerPopup").style.display="flex"; }
+function closeOffer(){ document.getElementById("offerPopup").style.display="none"; }
+function stay(){ alert("You stayed subscribed 🎉"); closeOffer(); }
 
 // STEP 3
-function openFinal() {
-  document.getElementById("finalPopup").style.display = "flex";
-}
-function closeFinal() {
-  document.getElementById("finalPopup").style.display = "none";
-}
-function cancel() {
-  alert("Subscription cancelled.");
+function openFinal(){ document.getElementById("finalPopup").style.display="flex"; }
+function closeFinal(){ document.getElementById("finalPopup").style.display="none"; }
+function confirmCancel(){
+  alert("Processing...");
+  setTimeout(()=>alert("Subscription cancelled"),2000);
 }
 </script>
 
