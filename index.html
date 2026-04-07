@@ -35,8 +35,53 @@ body { margin:0; font-family:Arial; background:#0b0b0f; color:white; }
 
 <!-- SCREEN 1 -->
 <div id="screen1" class="screen active">
-  <h1>Upgrade looks easy. Leaving does not.</h1>
-  <button class="btn btn-primary" onclick="goTo(2)">Start Free Trial</button>
+
+  <h1 style="font-size:42px;">Upgrade looks easy. Leaving does not.</h1>
+
+  <p style="color:#bbb;">
+    This demo shows how subscription platforms make joining simple and attractive,
+    but make cancellation hidden and frustrating.
+  </p>
+
+  <!-- HERO SECTION -->
+  <div style="display:flex; gap:30px; margin-top:30px; flex-wrap:wrap;">
+
+    <!-- LEFT CONTENT -->
+    <div style="flex:2; background:#111; padding:20px; border-radius:12px;">
+      <h2>Premium Content</h2>
+      <p>Locked features create urgency and pressure.</p>
+
+      <div style="display:flex; gap:15px; margin-top:15px;">
+        <div style="background:#222; padding:20px; border-radius:10px;">
+          🎬 Exclusive Movies
+        </div>
+        <div style="background:#222; padding:20px; border-radius:10px;">
+          📥 Offline Access
+        </div>
+        <div style="background:#222; padding:20px; border-radius:10px;">
+          👨‍👩‍👧 Family Sharing
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PRICING BOX -->
+    <div style="flex:1; background:#e50914; padding:20px; border-radius:12px;">
+      <h2>Premium Plan</h2>
+      <h1>$0</h1>
+      <p>3 days free trial</p>
+      <p style="font-size:12px;">Auto renews $19.99/month</p>
+
+      <button class="btn btn-primary" onclick="goTo(2)" style="width:100%;">
+        Start Free Trial
+      </button>
+
+      <button class="btn btn-link" onclick="goTo(2)">
+        Maybe later
+      </button>
+    </div>
+
+  </div>
+
 </div>
 
 <!-- SCREEN 2 -->
