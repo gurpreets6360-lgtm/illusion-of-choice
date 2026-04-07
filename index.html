@@ -1,223 +1,480 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StreamFlow Premium</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StreamFlow Premium - Roach Motel Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-<style>
-/* --- SAME DESIGN (kept clean + premium) --- */
-body { margin:0; font-family:Arial; background:#0b0b0f; color:white; }
-.screen { display:none; padding:30px; }
-.screen.active { display:block; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+    }
 
-.btn {
-  padding:12px 18px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-}
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
 
-.btn-primary { background:red; color:white; }
-.btn-link { background:none; color:#aaa; text-decoration:underline; }
-.orange { background:orange; color:black; }
+    .sidebar {
+      width: 230px;
+      background: #111827;
+      padding: 28px 20px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
 
-.flow-step {
-  background:#1a1a1a;
-  padding:15px;
-  margin:10px 0;
-  border-left:4px solid orange;
-}
-</style>
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #38bdf8;
+      margin-bottom: 30px;
+    }
+
+    .menu-item {
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      color: #cbd5e1;
+    }
+
+    .menu-item.active {
+      background: linear-gradient(90deg, #2563eb, #38bdf8);
+      color: white;
+      font-weight: bold;
+    }
+
+    .content {
+      flex: 1;
+      padding: 32px;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+    }
+
+    .screen {
+      display: none;
+      animation: fade 0.5s ease;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .tag {
+      background: rgba(56,189,248,0.15);
+      color: #7dd3fc;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .content-card {
+      background: linear-gradient(180deg, rgba(56,189,248,0.16), rgba(255,255,255,0.04));
+      border-radius: 18px;
+      padding: 18px;
+      min-height: 150px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content-card h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .locked {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #f59e0b;
+      color: #111827;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-weight: bold;
+    }
+
+    .price-box {
+      background: linear-gradient(135deg, #1d4ed8, #06b6d4);
+      border-radius: 20px;
+      padding: 24px;
+      color: white;
+    }
+
+    .price {
+      font-size: 42px;
+      font-weight: bold;
+      margin: 12px 0 6px;
+    }
+
+    .small {
+      font-size: 14px;
+      color: #e0f2fe;
+    }
+
+    .warning-text {
+      font-size: 12px;
+      color: #dbeafe;
+      opacity: 0.75;
+      margin-top: 8px;
+    }
+
+    .timer {
+      margin-top: 10px;
+      color: #fde68a;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: 0.25s ease;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: #22c55e;
+      color: white;
+      width: 100%;
+      font-weight: bold;
+      box-shadow: 0 10px 20px rgba(34,197,94,0.25);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: rgba(255,255,255,0.45);
+      text-decoration: underline;
+      font-size: 12px;
+      padding: 8px 0;
+    }
+
+    .btn-secondary:hover {
+      color: rgba(255,255,255,0.7);
+      transform: none;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.05);
+      padding: 18px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .flow-steps {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .flow-step {
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border-left: 5px solid #f97316;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #fdba74;
+    }
+
+    .actions {
+      margin-top: 22px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .orange {
+      background: linear-gradient(90deg, #f97316, #fb7185);
+      color: white;
+      font-weight: bold;
+    }
+
+    .guilt-message {
+      margin-top: 16px;
+      color: #fca5a5;
+      font-weight: bold;
+    }
+
+    .final-note {
+      margin-top: 22px;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.25);
+      padding: 18px;
+      border-radius: 16px;
+      color: #dcfce7;
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+
+      .hero,
+      .cards,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">StreamFlow</div>
+      <div class="menu-item active">Premium</div>
+      <div class="menu-item">My Shows</div>
+      <div class="menu-item">Downloads</div>
+      <div class="menu-item">Billing</div>
+      <div class="menu-item">Settings</div>
+    </aside>
 
-  <div id="screen1" class="screen active">
+    <main class="content">
 
-  <!-- HERO SECTION -->
-  <div style="
-    height:80vh;
-    background:linear-gradient(to top, black, transparent),
-    url('https://images.unsplash.com/photo-1524985069026-dd778a71c7b4') center/cover no-repeat;
-    display:flex;
-    align-items:flex-end;
-    padding:40px;
-  ">
+      <!-- Screen 1 -->
+      <section id="screen1" class="screen active">
+        <div class="topbar">
+          <div>
+            <div class="tag">Roach Motel Dark Pattern</div>
+            <h1>Upgrade looks easy. Leaving does not.</h1>
+            <p>
+              This demo shows how digital platforms make joining feel simple and attractive,
+              but make cancellation hidden, slow, and frustrating.
+            </p>
+          </div>
+        </div>
 
-    <div>
-      <h1 style="font-size:50px;">Premium Access</h1>
-      <p style="max-width:500px; color:#ddd;">
-        Watch exclusive content, download offline, and enjoy ad-free streaming.
-      </p>
+        <div class="hero">
+          <div class="panel">
+            <h2>Premium Content Preview</h2>
+            <p>
+              Users see locked features and content, which creates pressure to upgrade quickly.
+            </p>
 
-      <button class="btn btn-primary" onclick="goTo(2)">
-        ▶ Play
-      </button>
+            <div class="cards">
+              <div class="content-card">
+                <span class="locked">Locked</span>
+                <h3>Exclusive Movies</h3>
+                <p>Premium-only new releases and full HD access.</p>
+              </div>
+              <div class="content-card">
+                <span class="locked">Locked</span>
+                <h3>Offline Access</h3>
+                <p>Download and watch anywhere without ads.</p>
+              </div>
+              <div class="content-card">
+                <span class="locked">Locked</span>
+                <h3>Family Sharing</h3>
+                <p>Add 4 more users with one premium plan.</p>
+              </div>
+            </div>
+          </div>
 
-      <button class="btn btn-link" onclick="goTo(2)">
-        More Info
-      </button>
-    </div>
+          <div class="price-box">
+            <h2>Premium Plan</h2>
+            <div class="price">$0</div>
+            <p class="small">for 3 days, then auto-renews monthly</p>
+            <p class="warning-text">* Auto-renews at $19.99/month unless cancelled manually</p>
+            <p id="timer" class="timer">Offer expires in: 00:30</p>
+            <button class="btn btn-primary" onclick="goTo(2)">Start Free Trial</button>
+            <button class="btn btn-secondary" onclick="goTo(2)">Maybe later</button>
+          </div>
+        </div>
+      </section>
 
+      <!-- Screen 2 -->
+      <section id="screen2" class="screen">
+        <div class="tag">Easy Entry</div>
+        <h2>Why users click the trial</h2>
+        <p>
+          The sign-up button is bright, large, and placed where the eye goes first.
+          The decline option is faint and less visible.
+        </p>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>Big</strong>
+            Main action button
+          </div>
+          <div class="stat">
+            <strong>Bright</strong>
+            Attention-grabbing color
+          </div>
+          <div class="stat">
+            <strong>Small</strong>
+            Hidden decline option
+          </div>
+        </div>
+
+        <div class="hero" style="margin-top:24px;">
+          <div class="panel">
+            <h2>Subscription Offer</h2>
+            <p><strong>Example:</strong> It takes one click to join a free trial.</p>
+            <p><strong>Psychological Tactic:</strong> Users feel encouraged to continue because the design strongly favors the business option.</p>
+            <p><strong>Impact:</strong> Users may sign up quickly, forget to cancel, and get charged on renewal.</p>
+          </div>
+
+          <div class="panel">
+            <h2>Choose an Option</h2>
+            <button class="btn btn-primary" onclick="alert('Free trial started')">Start Free Trial</button>
+            <button class="btn btn-secondary" onclick="goTo(3)">No thanks</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screen 3 -->
+      <section id="screen3" class="screen">
+        <div class="tag">Difficult Exit</div>
+        <h2>Cancellation Maze</h2>
+        <p>
+          After joining, leaving becomes much harder. This is the core of the Roach Motel pattern.
+        </p>
+
+        <div class="flow-steps">
+          <div class="flow-step">
+            <strong>Step 1: Confirm identity</strong>
+            The user must verify account details before they can continue.
+          </div>
+          <div class="flow-step">
+            <strong>Step 2: Review special offer</strong>
+            The system shows discounts and asks the user to stay.
+          </div>
+          <div class="flow-step">
+            <strong>Step 3: Final confirmation</strong>
+            Another confirmation slows down the exit even more.
+          </div>
+        </div>
+
+        <p class="guilt-message">Are you sure you want to lose premium benefits?</p>
+
+        <div class="actions">
+          <button class="btn orange" onclick="step1()">Verify Account</button>
+          <button class="btn orange" onclick="step2()">Review Offer</button>
+          <button class="btn btn-primary" onclick="step3()">Final Cancel</button>
+        </div>
+
+        <div class="final-note">
+          Solution: cancellation should be as easy, visible, and fast as sign-up.
+        </div>
+      </section>
+
+    </main>
   </div>
 
-  <!-- CONTENT ROW -->
-  <h2 style="margin:20px;">Trending Now</h2>
+  <script>
+    function goTo(num) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen' + num).classList.add('active');
+    }
 
-  <div style="display:flex; gap:15px; padding:0 20px; overflow-x:auto;">
+    function step1() {
+      alert("Please verify your account before cancellation.");
+    }
 
-    <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f"
-      style="width:200px; height:120px; border-radius:8px;">
+    function step2() {
+      alert("Special offer: Stay for 50% off this month.");
+    }
 
-    <img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc"
-      style="width:200px; height:120px; border-radius:8px;">
+    function step3() {
+      alert("Processing request...");
+      setTimeout(() => {
+        alert("Subscription cancelled.");
+      }, 2000);
+    }
 
-    <img src="https://images.unsplash.com/photo-1517602302552-471fe67acf66"
-      style="width:200px; height:120px; border-radius:8px;">
-
-    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"
-      style="width:200px; height:120px; border-radius:8px;">
-  </div>
-
-  <!-- SECOND ROW -->
-  <h2 style="margin:20px;">Only on Premium 🔒</h2>
-
-  <div style="display:flex; gap:15px; padding:0 20px; overflow-x:auto;">
-
-    <div style="position:relative;">
-      <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26"
-        style="width:200px; height:120px; border-radius:8px;">
-      <span style="position:absolute; top:5px; right:5px; background:orange; padding:4px; font-size:12px;">Locked</span>
-    </div>
-
-    <div style="position:relative;">
-      <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c"
-        style="width:200px; height:120px; border-radius:8px;">
-      <span style="position:absolute; top:5px; right:5px; background:orange; padding:4px; font-size:12px;">Locked</span>
-    </div>
-
-    <div style="position:relative;">
-      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d"
-        style="width:200px; height:120px; border-radius:8px;">
-      <span style="position:absolute; top:5px; right:5px; background:orange; padding:4px; font-size:12px;">Locked</span>
-    </div>
-
-  </div>
-
-  <!-- PRICING BOX -->
-  <div style="
-    background:#111;
-    margin:30px;
-    padding:20px;
-    border-radius:12px;
-    text-align:center;
-  ">
-    <h2>Start Your Free Trial</h2>
-    <h1 style="color:red;">$0</h1>
-    <p>3 days free → then $19.99/month</p>
-
-    <button class="btn btn-primary" onclick="goTo(2)">
-      Start Free Trial
-    </button>
-
-    <br>
-
-    <button class="btn btn-link" onclick="goTo(2)">
-      Maybe later
-    </button>
-  </div>
-
-</div>
-
-    <!-- RIGHT PRICING BOX -->
-    <div style="flex:1; background:#e50914; padding:20px; border-radius:12px;">
-      <h2>Premium Plan</h2>
-      <h1>$0</h1>
-      <p>3 days free trial</p>
-      <p style="font-size:12px;">
-
-<!-- SCREEN 2 -->
-<div id="screen2" class="screen">
-  <h2>ROACH MOTEL</h2>
-  <p>Easy to join, hard to leave.</p>
-  <button class="btn btn-primary" onclick="goTo(3)">Continue</button>
-</div>
-
-<!-- SCREEN 3 -->
-<div id="screen3" class="screen">
-  <h2>Cancellation Maze</h2>
-
-  <div class="flow-step">Step 1: Confirm identity</div>
-  <button class="btn orange" onclick="openPopup()">Verify Account</button>
-
-  <div class="flow-step">Step 2: Special offer</div>
-  <button class="btn orange" onclick="openOffer()">Review Offer</button>
-
-  <div class="flow-step">Step 3: Final confirmation</div>
-  <button class="btn btn-primary" onclick="openFinal()">Final Cancel</button>
-</div>
-
-<!-- POPUP 1 -->
-<div id="popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
-  <div style="background:#111; padding:25px; border-radius:10px; width:300px; text-align:center;">
-    <h3 style="color:red;">Verify Email</h3>
-    <input id="emailInput" placeholder="Enter email" style="width:100%; padding:10px; margin:10px 0;">
-    <button class="btn btn-primary" style="width:100%;" onclick="submitEmail()">Send Link</button>
-    <button class="btn btn-link" onclick="closePopup()">Cancel</button>
-  </div>
-</div>
-
-<!-- POPUP 2 -->
-<div id="offerPopup" style="display:none; position:fixed; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
-  <div style="background:#111; padding:25px; border-radius:10px; width:300px; text-align:center;">
-    <h3 style="color:#fbbf24;">🎉 50% OFF</h3>
-    <p>Stay and save money</p>
-    <button class="btn btn-primary" style="width:100%;" onclick="stay()">Stay & Save</button>
-    <button class="btn btn-link" onclick="closeOffer()">No thanks</button>
-  </div>
-</div>
-
-<!-- POPUP 3 -->
-<div id="finalPopup" style="display:none; position:fixed; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
-  <div style="background:#111; padding:25px; border-radius:10px; width:300px; text-align:center;">
-    <h3 style="color:#ff6b6b;">😢 We'll miss you</h3>
-    <p>You will lose premium features</p>
-    <button class="btn btn-primary" style="width:100%;" onclick="confirmCancel()">Cancel Anyway</button>
-    <button class="btn btn-link" onclick="closeFinal()">Keep Subscription</button>
-  </div>
-</div>
-
-<script>
-// Navigation
-function goTo(num){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen'+num).classList.add('active');
-}
-
-// STEP 1
-function openPopup(){ document.getElementById("popup").style.display="flex"; }
-function closePopup(){ document.getElementById("popup").style.display="none"; }
-function submitEmail(){
-  let email = document.getElementById("emailInput").value;
-  if(email===""){ alert("Enter email"); return; }
-  alert("Verification sent!");
-  closePopup();
-}
-
-// STEP 2
-function openOffer(){ document.getElementById("offerPopup").style.display="flex"; }
-function closeOffer(){ document.getElementById("offerPopup").style.display="none"; }
-function stay(){ alert("You stayed subscribed 🎉"); closeOffer(); }
-
-// STEP 3
-function openFinal(){ document.getElementById("finalPopup").style.display="flex"; }
-function closeFinal(){ document.getElementById("finalPopup").style.display="none"; }
-function confirmCancel(){
-  alert("Processing...");
-  setTimeout(()=>alert("Subscription cancelled"),2000);
-}
-</script>
-
+    let time = 30;
+    setInterval(() => {
+      if (time > 0) {
+        time--;
+        document.getElementById("timer").innerText =
+          "Offer expires in: 00:" + (time < 10 ? "0" + time : time);
+      }
+    }, 1000);
+  </script>
 </body>
 </html>
