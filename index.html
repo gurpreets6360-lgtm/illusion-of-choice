@@ -33,56 +33,109 @@ body { margin:0; font-family:Arial; background:#0b0b0f; color:white; }
 
 <body>
 
-<!-- SCREEN 1 -->
-<div id="screen1" class="screen active">
-
-  <h1 style="font-size:42px;">Upgrade looks easy. Leaving does not.</h1>
-
-  <p style="color:#bbb;">
-    This demo shows how subscription platforms make joining simple and attractive,
-    but make cancellation hidden and frustrating.
-  </p>
+  <div id="screen1" class="screen active">
 
   <!-- HERO SECTION -->
-  <div style="display:flex; gap:30px; margin-top:30px; flex-wrap:wrap;">
+  <div style="
+    height:80vh;
+    background:linear-gradient(to top, black, transparent),
+    url('https://images.unsplash.com/photo-1524985069026-dd778a71c7b4') center/cover no-repeat;
+    display:flex;
+    align-items:flex-end;
+    padding:40px;
+  ">
 
-    <!-- LEFT CONTENT -->
-    <div style="flex:2; background:#111; padding:20px; border-radius:12px;">
-      <h2>Premium Content</h2>
-      <p>Locked features create urgency and pressure.</p>
+    <div>
+      <h1 style="font-size:50px;">Premium Access</h1>
+      <p style="max-width:500px; color:#ddd;">
+        Watch exclusive content, download offline, and enjoy ad-free streaming.
+      </p>
 
-      <div style="display:flex; gap:15px; margin-top:15px;">
-        <div style="background:#222; padding:20px; border-radius:10px;">
-          🎬 Exclusive Movies
-        </div>
-        <div style="background:#222; padding:20px; border-radius:10px;">
-          📥 Offline Access
-        </div>
-        <div style="background:#222; padding:20px; border-radius:10px;">
-          👨‍👩‍👧 Family Sharing
-        </div>
-      </div>
+      <button class="btn btn-primary" onclick="goTo(2)">
+        ▶ Play
+      </button>
+
+      <button class="btn btn-link" onclick="goTo(2)">
+        More Info
+      </button>
     </div>
+
+  </div>
+
+  <!-- CONTENT ROW -->
+  <h2 style="margin:20px;">Trending Now</h2>
+
+  <div style="display:flex; gap:15px; padding:0 20px; overflow-x:auto;">
+
+    <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f"
+      style="width:200px; height:120px; border-radius:8px;">
+
+    <img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc"
+      style="width:200px; height:120px; border-radius:8px;">
+
+    <img src="https://images.unsplash.com/photo-1517602302552-471fe67acf66"
+      style="width:200px; height:120px; border-radius:8px;">
+
+    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"
+      style="width:200px; height:120px; border-radius:8px;">
+  </div>
+
+  <!-- SECOND ROW -->
+  <h2 style="margin:20px;">Only on Premium 🔒</h2>
+
+  <div style="display:flex; gap:15px; padding:0 20px; overflow-x:auto;">
+
+    <div style="position:relative;">
+      <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26"
+        style="width:200px; height:120px; border-radius:8px;">
+      <span style="position:absolute; top:5px; right:5px; background:orange; padding:4px; font-size:12px;">Locked</span>
+    </div>
+
+    <div style="position:relative;">
+      <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c"
+        style="width:200px; height:120px; border-radius:8px;">
+      <span style="position:absolute; top:5px; right:5px; background:orange; padding:4px; font-size:12px;">Locked</span>
+    </div>
+
+    <div style="position:relative;">
+      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d"
+        style="width:200px; height:120px; border-radius:8px;">
+      <span style="position:absolute; top:5px; right:5px; background:orange; padding:4px; font-size:12px;">Locked</span>
+    </div>
+
+  </div>
+
+  <!-- PRICING BOX -->
+  <div style="
+    background:#111;
+    margin:30px;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+  ">
+    <h2>Start Your Free Trial</h2>
+    <h1 style="color:red;">$0</h1>
+    <p>3 days free → then $19.99/month</p>
+
+    <button class="btn btn-primary" onclick="goTo(2)">
+      Start Free Trial
+    </button>
+
+    <br>
+
+    <button class="btn btn-link" onclick="goTo(2)">
+      Maybe later
+    </button>
+  </div>
+
+</div>
 
     <!-- RIGHT PRICING BOX -->
     <div style="flex:1; background:#e50914; padding:20px; border-radius:12px;">
       <h2>Premium Plan</h2>
       <h1>$0</h1>
       <p>3 days free trial</p>
-      <p style="font-size:12px;">Auto renews $19.99/month</p>
-
-      <button class="btn btn-primary" onclick="goTo(2)" style="width:100%;">
-        Start Free Trial
-      </button>
-
-      <button class="btn btn-link" onclick="goTo(2)">
-        Maybe later
-      </button>
-    </div>
-
-  </div>
-
-</div>
+      <p style="font-size:12px;">
 
 <!-- SCREEN 2 -->
 <div id="screen2" class="screen">
